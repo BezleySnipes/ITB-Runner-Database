@@ -14,10 +14,6 @@ public class Driver {
 			// create statement
 			Statement myState = myConn.createStatement();
 
-			// execute sql query
-			// int numRecordsUpdated = myState.executeUpdate("INSERT INTO dept VALUES (22,'abc','ghjk')");
-			myState.execute("INSERT INTO dept VALUES (22,'abc','ghjk')");
-			// System.out.println(numRecordsUpdated);
 			ResultSet myRs = myState.executeQuery("select ename,sal from emp where sal between 1500 and 3000");
 			// process the result set
 			while (myRs.next()) {
