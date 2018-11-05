@@ -10,9 +10,8 @@ public class runner {
 	private String runnerName;
 	private String runnerCat;
 	private int runnerAge;
-	private String dbAddress = "jdbc:mysql://localhost:3306/competition?autoReconnect=true&useSSL=false" ;
-	private String user = "root";
-	private String password = "root";
+	
+	connect myCon = new connect();
 	
 	//no-args constructor
 	public runner(){
@@ -32,7 +31,7 @@ public class runner {
 public void remove(int runnerID) {
 	try {
 		// get a connection to database
-		Connection myConn = DriverManager.getConnection(dbAddress,user,password);
+		Connection myConn = DriverManager.getConnection(myCon.dbAddress,myCon.user,myCon.password);
 
 		// create statement
 		Statement myState = myConn.createStatement();
@@ -42,24 +41,30 @@ public void remove(int runnerID) {
 		
 		
 	} catch (Exception r) {
-		// TODO: handle exception
+//		
+//		
+//		
+//		
+//		
+//		
 		}
 }
 	
 public void add(String runnerName, int runnerAge, String runnerCat) {
-	try {
-		// get a connection to database
-		Connection myConn = DriverManager.getConnection(dbAddress,user,password);
-
-		// create statement
-		Statement myState = myConn.createStatement();
-		// execute sql query
-		myState.execute("INSERT INTO runner (runnerName, runnerAge, runningCategory) VALUES ('"+runnerName + "'," + runnerAge + ",'" + runnerCat+"')");
-		
-		
-	} catch (Exception a) {
-		// TODO: handle exception
-		a.printStackTrace();
-	}
+//	try {
+//		// get a connection to database
+//		Connection myConn = DriverManager.getConnection(dbAddress,user,password);
+//
+//		// create statement
+//		Statement myState = myConn.createStatement();
+//		// execute sql query
+//		myState.execute("INSERT INTO runner (runnerName, runnerAge, runningCategory) VALUES ('"+runnerName + "'," + runnerAge + ",'" + runnerCat+"')");
+//		
+//		
+//	} catch (Exception a) {
+//		// TODO: handle exception
+//		a.printStackTrace();
+//	}
+	addRunner newRunner = new addRunner(runnerName,runnerAge,runnerCat);
 }
 }
