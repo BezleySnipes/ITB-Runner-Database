@@ -10,41 +10,56 @@ public class runner {
 	private String runnerName;
 	private String runnerCat;
 	private int runnerAge;
+	private String dbAddress = "jdbc:mysql://localhost:3306/competition?autoReconnect=true&useSSL=false" ;
+	private String user = "root";
+	private String password = "root";
 	
 	//no-args constructor
 	public runner(){
 		runnerName = "Not Running";
-		runnerCat = "Null";
 		runnerAge = 00;
+		runnerCat = "Null";
 	}
 	
 	// custom constructor
-	public runner(String rName, String rCat, int rAge){
+	public runner(String rName, int rAge, String rCat){
 		runnerName = rName;
 		runnerCat = rCat;
 		runnerAge = rAge;
 	}
 	
 	
-	
-	
-	public void add(String runnerName,String runnerCat, int runnerAge) {
+public void remove(int runnerID) {
 	try {
-
 		// get a connection to database
-		Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ITB", "root", "root");
+		Connection myConn = DriverManager.getConnection(dbAddress,user,password);
 
 		// create statement
 		Statement myState = myConn.createStatement();
 		
 		// execute sql query
-		myState.execute("INSERT INTO dept VALUES ("+runnerAge + ",'" + runnerName + "','" + runnerCat+"')");
+		myState.execute("DELETE FROM runner WHERE runnerID = '"+runnerID+"'");
 		
 		
-	} catch (Exception e) {
+	} catch (Exception r) {
 		// TODO: handle exception
-		e.printStackTrace();
-	}
-	}
+		}
+}
+	
+public void add(String runnerName, int runnerAge, String runnerCat) {
+	try {
+		// get a connection to database
+		Connection myConn = DriverManager.getConnection(dbAddress,user,password);
 
+		// create statement
+		Statement myState = myConn.createStatement();
+		// execute sql query
+		myState.execute("INSERT INTO runner (runnerName, runnerAge, runningCategory) VALUES ('"+runnerName + "'," + runnerAge + ",'" + runnerCat+"')");
+		
+		
+	} catch (Exception a) {
+		// TODO: handle exception
+		a.printStackTrace();
+	}
+}
 }
