@@ -6,7 +6,7 @@ public class test {
 		// TODO Auto-generated method stub
 		runner r1 = new runner();
 		r1.showAll();
-
+		r1.remove("Test");
 
 	}
 

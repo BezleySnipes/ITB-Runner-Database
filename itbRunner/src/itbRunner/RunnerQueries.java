@@ -75,7 +75,7 @@ public class RunnerQueries {
 	}
 	
 	//ShowAll runners method
-	public void showAll() {
+	public ResultSet showAll() {
 		try {
 			getConnection();
 			mySta = myConn.prepareStatement("SELECT runnerName,runnerAge,runningCategory FROM runner");
@@ -84,6 +84,7 @@ public class RunnerQueries {
 			} catch (SQLException e) {
 				JOptionPane.showMessageDialog(null, "Failed to showAll","ITB Runner Database",2);
 			}
+		return myRs;
 	}
 	
 
