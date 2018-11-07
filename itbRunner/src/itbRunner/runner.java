@@ -1,11 +1,12 @@
 package itbRunner;
 
 public class runner {
+
 	private String runnerName;
 	private String runnerCat;
 	private int runnerAge;
 
-	Database runnerDb = new Database();
+	RunnerQueries runnerDb = new RunnerQueries();
 
 	// no parameters constructor
 	public runner() {
@@ -21,9 +22,9 @@ public class runner {
 		runnerAge = rAge;
 	}
 
-	public void remove(int runnerID) {
+	public void remove(String runnerName) {
 		try {
-			runnerDb.remove(runnerID);
+			runnerDb.remove(runnerName);
 			;
 		} catch (Exception a) {
 			// TODO: handle exception
@@ -40,14 +41,53 @@ public class runner {
 		}
 
 	}
-	
-	public void update(int runnerId, String runnerCat) {
+
+	public void update(String runnerName, String runnerCat) {
 		try {
-			runnerDb.update(runnerId, runnerCat);
+			runnerDb.update(runnerName, runnerCat);
+		} catch (Exception a) {
+			// TODO: handle exception
+			a.printStackTrace();
+		}
+	}
+
+	public void showAll() {
+		try {
+			runnerDb.showAll();
 		} catch (Exception a) {
 			// TODO: handle exception
 			a.printStackTrace();
 		}
 
 	}
+
+	@Override
+	public String toString() {
+		return runnerName + " , " + runnerAge + " , " + runnerCat + ".";
+	}
+
+	public String getRunnerName() {
+		return runnerName;
+	}
+
+	public void setRunnerName(String runnerName) {
+		this.runnerName = runnerName;
+	}
+
+	public String getRunnerCat() {
+		return runnerCat;
+	}
+
+	public void setRunnerCat(String runnerCat) {
+		this.runnerCat = runnerCat;
+	}
+
+	public int getRunnerAge() {
+		return runnerAge;
+	}
+
+	public void setRunnerAge(int runnerAge) {
+		this.runnerAge = runnerAge;
+	}
+
 }

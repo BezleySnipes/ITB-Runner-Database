@@ -2,19 +2,20 @@ package itbRunner;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-
 import javax.swing.JOptionPane;
 
-public class Database {
+public class RunnerQueries {
 
 	//Variable block
 	public String dbAddress = "jdbc:mysql://localhost:3306/competition?autoReconnect=true&useSSL=false";
 	public String user = "root";
 	public String password = "root";
-	public Connection myConn;
-	public Statement myState;
+	private Connection myConn;
+	private PreparedStatement mySta;
+	private ResultSet myRs = null;
 
 	// Create and return a valid connection to the user
 	public Connection getConnection() {
@@ -31,8 +32,11 @@ public class Database {
 	public void insert(String runnerName, int runnerAge, String runnerCat) {
 		try {
 			getConnection();
-			Statement myState = myConn.createStatement();
-			myState.execute("INSERT INTO runner (runnerName, runnerAge, runningCategory) VALUES ('" + runnerName + "',"+ runnerAge + ",'" + runnerCat + "')");
+			mySta = myConn.prepareStatement("INSERT INTO runner (runnerName, runnerAge, runningCategory) VALUES (?,?,?)");
+			mySta.setString(1, runnerName);
+			mySta.setInt(2, runnerAge);
+			mySta.setString(3, runnerCat);
+			mySta.executeUpdate();
 			JOptionPane.showMessageDialog(null, "Success!!!", "ITB Runner Database",1);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -42,11 +46,12 @@ public class Database {
 	}
 	
 	//Remove runner method
-	public void remove(int runnerId) {
+	public void remove(String runnerName) {
 		try {
 			getConnection();
-			Statement myState = myConn.createStatement();
-			myState.execute("DELETE FROM runner WHERE runnerID = '" + runnerId + "'");
+			mySta = myConn.prepareStatement("DELETE FROM runner WHERE runnerName = ?");
+			mySta.setString(1, runnerName);
+			mySta.executeUpdate();
 			JOptionPane.showMessageDialog(null, "Success!!!", "ITB Runner Database",1);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -55,17 +60,32 @@ public class Database {
 	}
 	
 	//Update runner method
-	public void update(int runnerId,String runnerCat) {
+	public void update(String runnerName,String runnerCat) {
 		try {
 			getConnection();
-			Statement myState = myConn.createStatement();
-			myState.execute("UPDATE runner SET runningCategory = '"+runnerCat+"' WHERE runnerID = '"+runnerId+"'");
+			mySta = myConn.prepareStatement("UPDATE runner SET runningCategory = ? WHERE runnerName = ?");
+			mySta.setString(1, runnerCat);
+			mySta.setString(2, runnerName);
+			mySta.executeUpdate();
 			JOptionPane.showMessageDialog(null, "Success!!!", "ITB Runner Database",1);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			JOptionPane.showMessageDialog(null, "Failed to update the database, please try again!","ITB Runner Database",2);
 		}
 	}
+	
+	//ShowAll runners method
+	public void showAll() {
+		try {
+			getConnection();
+			mySta = myConn.prepareStatement("SELECT runnerName,runnerAge,runningCategory FROM runner");
+			myRs = mySta.executeQuery();
+			JOptionPane.showMessageDialog(null, "Success!!!", "ITB Runner Database",1);
+			} catch (SQLException e) {
+				JOptionPane.showMessageDialog(null, "Failed to showAll","ITB Runner Database",2);
+			}
+	}
+	
 
 	//Getters and Setters area
 	public String getDbAddress() {
