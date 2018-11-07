@@ -11,7 +11,7 @@ public class runner {
 	private String runnerCat;
 	private int runnerAge;
 	
-	connect myCon = new connect();
+	Database runnerDb = new Database();
 	
 	//no-args constructor
 	public runner(){
@@ -31,13 +31,13 @@ public class runner {
 public void remove(int runnerID) {
 	try {
 		// get a connection to database
-		Connection myConn = DriverManager.getConnection(myCon.dbAddress,myCon.user,myCon.password);
+	//	Connection myConn = DriverManager.getConnection(myCon.dbAddress,myCon.user,myCon.password);
 
 		// create statement
-		Statement myState = myConn.createStatement();
+//		Statement myState = myConn.createStatement();
 		
 		// execute sql query
-		myState.execute("DELETE FROM runner WHERE runnerID = '"+runnerID+"'");
+//		myState.execute("DELETE FROM runner WHERE runnerID = '"+runnerID+"'");
 		
 		
 	} catch (Exception r) {
@@ -51,20 +51,12 @@ public void remove(int runnerID) {
 }
 	
 public void add(String runnerName, int runnerAge, String runnerCat) {
-//	try {
-//		// get a connection to database
-//		Connection myConn = DriverManager.getConnection(dbAddress,user,password);
-//
-//		// create statement
-//		Statement myState = myConn.createStatement();
-//		// execute sql query
-//		myState.execute("INSERT INTO runner (runnerName, runnerAge, runningCategory) VALUES ('"+runnerName + "'," + runnerAge + ",'" + runnerCat+"')");
-//		
-//		
-//	} catch (Exception a) {
-//		// TODO: handle exception
-//		a.printStackTrace();
-//	}
-	addRunner newRunner = new addRunner(runnerName,runnerAge,runnerCat);
+	try {
+		runnerDb.insert(runnerName, runnerAge, runnerCat);
+	} catch (Exception a) {
+		// TODO: handle exception
+		a.printStackTrace();
+	}
+	
 }
 }

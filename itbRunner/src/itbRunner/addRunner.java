@@ -8,11 +8,11 @@ public class addRunner {
 	
 	public addRunner(String runnerName, int runnerAge, String runnerCat) {
 	
-	connect myCon = new connect();
+	Database myDb = new Database();
 	
 	try {
 		// get a connection to database
-		Connection myConn = DriverManager.getConnection(myCon.dbAddress,myCon.user,myCon.password);
+		Connection myConn = myDb.getConnection();
 
 		// create statement
 		Statement myState = myConn.createStatement();
