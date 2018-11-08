@@ -22,44 +22,6 @@ public class runner {
 		runnerAge = rAge;
 	}
 
-	public void remove(String runnerName) {
-		try {
-			runnerDb.remove(runnerName);
-			;
-		} catch (Exception a) {
-			// TODO: handle exception
-			a.printStackTrace();
-		}
-	}
-
-	public void add(String runnerName, int runnerAge, String runnerCat) {
-		try {
-			runnerDb.insert(runnerName, runnerAge, runnerCat);
-		} catch (Exception a) {
-			// TODO: handle exception
-			a.printStackTrace();
-		}
-
-	}
-
-	public void update(String runnerName, String runnerCat) {
-		try {
-			runnerDb.update(runnerName, runnerCat);
-		} catch (Exception a) {
-			// TODO: handle exception
-			a.printStackTrace();
-		}
-	}
-
-	public void showAll() {
-		try {
-			runnerDb.showAll();
-		} catch (Exception a) {
-			// TODO: handle exception
-			a.printStackTrace();
-		}
-
-	}
 
 	@Override
 	public String toString() {

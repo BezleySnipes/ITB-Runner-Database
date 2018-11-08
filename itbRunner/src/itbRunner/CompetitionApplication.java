@@ -1,18 +1,20 @@
 package itbRunner;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTabbedPane;
-import javax.swing.JTextPane;
 import javax.swing.JTextArea;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
@@ -20,6 +22,11 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 
 public class CompetitionApplication extends JFrame {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5780532187214899420L;
 
 	private JPanel contentPane;
 	private JTextField rNameAddTB;
@@ -48,7 +55,7 @@ public class CompetitionApplication extends JFrame {
 	 */
 	public CompetitionApplication() {
 		
-		runner r1 = new runner();
+		RunnerQueries run1 = new RunnerQueries();
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -65,18 +72,32 @@ public class CompetitionApplication extends JFrame {
 		tabbedPane.addTab("Show All", null, ShowAll, null);
 		ShowAll.setLayout(null);
 		
-		JTextArea textArea = new JTextArea();
-		textArea.setBounds(10, 11, 399, 159);
-		ShowAll.add(textArea);
+		JTextArea displayAllTA = new JTextArea();
+		displayAllTA.setBounds(10, 11, 399, 159);
+		ShowAll.add(displayAllTA);
 		
 		JButton btnRefresh = new JButton("Refresh");
 		btnRefresh.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				r1.showAll();
+				ResultSet rs = run1.showAll();
+				String displayText = "";
+				try {
+					while (rs.next()) {
+						String Name = rs.getString("runnerName");
+						String Age = Integer.toString(rs.getInt("runnerAge"));
+						String Cat = rs.getString("runningCategory");
+	
+						displayText += Name+",\t"+Age+",\t"+Cat+".\n";		
+					}
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				
-				
+				displayAllTA.setText(displayText);
 			}
 		});
+		run1.showAll();
 		btnRefresh.setBounds(160, 181, 89, 23);
 		ShowAll.add(btnRefresh);
 		
@@ -114,7 +135,13 @@ public class CompetitionApplication extends JFrame {
 		JButton addRunnerButton = new JButton("Add Runner");
 		addRunnerButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				r1.add(rNameAddTB.getText(), Integer.parseInt(rAgeAddTB.getText()), rCatAddCB.getSelectedItem().toString());
+				try {
+					run1.insert(rNameAddTB.getText(), Integer.parseInt(rAgeAddTB.getText()), rCatAddCB.getSelectedItem().toString());
+				} catch (NumberFormatException e1) {
+					// TODO Auto-generated catch block
+					JOptionPane.showMessageDialog(null, "Please only enter numbers in the age field","ITB Runner Database",2);
+					rAgeAddTB.setText("");
+				}
 				rNameAddTB.setText("");
 				rAgeAddTB.setText("");
 				rCatAddCB.setSelectedIndex(0);
@@ -139,7 +166,7 @@ public class CompetitionApplication extends JFrame {
 		JButton btnRemoveRunner = new JButton("Remove");
 		btnRemoveRunner.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				r1.remove(rNameRemoveTB.getText());
+				run1.remove(rNameRemoveTB.getText());
 				rNameRemoveTB.setText("");
 			}
 		});
@@ -171,7 +198,7 @@ public class CompetitionApplication extends JFrame {
 		JButton rUpdateButton = new JButton("Update");
 		rUpdateButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				r1.update(rNameUpdateTB.getText(), rCatUpdateCB.getSelectedItem().toString());
+				run1.update(rNameUpdateTB.getText(), rCatUpdateCB.getSelectedItem().toString());
 				rNameUpdateTB.setText("");
 				rCatUpdateCB.setSelectedIndex(0);
 			}

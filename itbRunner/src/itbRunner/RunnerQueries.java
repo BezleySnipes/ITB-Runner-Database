@@ -80,7 +80,6 @@ public class RunnerQueries {
 			getConnection();
 			mySta = myConn.prepareStatement("SELECT runnerName,runnerAge,runningCategory FROM runner");
 			myRs = mySta.executeQuery();
-			JOptionPane.showMessageDialog(null, "Success!!!", "ITB Runner Database",1);
 			} catch (SQLException e) {
 				JOptionPane.showMessageDialog(null, "Failed to showAll","ITB Runner Database",2);
 			}
