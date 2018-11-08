@@ -22,10 +22,10 @@ import javax.swing.DefaultComboBoxModel;
 public class CompetitionApplication extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField rNameTextBox;
-	private JTextField rAgeTextBox;
+	private JTextField rNameAddTB;
+	private JTextField rAgeAddTB;
 	private JTextField textField;
-	private JTextField textField_1;
+	private JTextField rNameRemoveTB;
 
 	/**
 	 * Launch the application.
@@ -91,20 +91,20 @@ public class CompetitionApplication extends JFrame {
 		lblRunningCategory.setBounds(42, 135, 113, 14);
 		addPanel.add(lblRunningCategory);
 		
-		rNameTextBox = new JTextField();
-		rNameTextBox.setBounds(149, 43, 178, 20);
-		addPanel.add(rNameTextBox);
-		rNameTextBox.setColumns(10);
+		rNameAddTB = new JTextField();
+		rNameAddTB.setBounds(149, 43, 178, 20);
+		addPanel.add(rNameAddTB);
+		rNameAddTB.setColumns(10);
 		
-		rAgeTextBox = new JTextField();
-		rAgeTextBox.setBounds(149, 86, 33, 20);
-		addPanel.add(rAgeTextBox);
-		rAgeTextBox.setColumns(10);
+		rAgeAddTB = new JTextField();
+		rAgeAddTB.setBounds(149, 86, 33, 20);
+		addPanel.add(rAgeAddTB);
+		rAgeAddTB.setColumns(10);
 		
-		JComboBox rCatBox = new JComboBox();
-		rCatBox.setModel(new DefaultComboBoxModel(new String[] {"", "Sprinter", "long Distance", "Mini Marathon", "Fun runner"}));
-		rCatBox.setBounds(149, 131, 178, 22);
-		addPanel.add(rCatBox);
+		JComboBox rCatAddCB = new JComboBox();
+		rCatAddCB.setModel(new DefaultComboBoxModel(new String[] {"", "Sprinter", "long Distance", "Mini Marathon", "Fun runner"}));
+		rCatAddCB.setBounds(149, 131, 178, 22);
+		addPanel.add(rCatAddCB);
 		
 		JButton addRunnerButton = new JButton("Add Runner");
 		addRunnerButton.setBounds(160, 181, 89, 23);
@@ -112,6 +112,24 @@ public class CompetitionApplication extends JFrame {
 		
 		JPanel removePanel = new JPanel();
 		tabbedPane.addTab("Remove Runner", null, removePanel, null);
+		removePanel.setLayout(null);
+		
+		JLabel rNameRemovelb = new JLabel("Runner Name:");
+		rNameRemovelb.setBounds(59, 58, 90, 14);
+		removePanel.add(rNameRemovelb);
+		
+		rNameRemoveTB = new JTextField();
+		rNameRemoveTB.setBounds(150, 55, 153, 20);
+		removePanel.add(rNameRemoveTB);
+		rNameRemoveTB.setColumns(10);
+		
+		JButton btnRemoveRunner = new JButton("Remove");
+		btnRemoveRunner.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnRemoveRunner.setBounds(160, 181, 89, 23);
+		removePanel.add(btnRemoveRunner);
 		
 		JPanel updatePanel = new JPanel();
 		tabbedPane.addTab("Update Runner", null, updatePanel, null);
@@ -121,31 +139,23 @@ public class CompetitionApplication extends JFrame {
 		label.setBounds(42, 46, 80, 14);
 		updatePanel.add(label);
 		
-		JLabel label_1 = new JLabel("Runner Age:");
-		label_1.setBounds(42, 89, 80, 14);
-		updatePanel.add(label_1);
-		
 		JLabel label_2 = new JLabel("Running Category:");
-		label_2.setBounds(42, 136, 113, 14);
+		label_2.setBounds(42, 88, 113, 14);
 		updatePanel.add(label_2);
 		
 		textField = new JTextField();
 		textField.setColumns(10);
-		textField.setBounds(114, 122, 178, 20);
+		textField.setBounds(149, 43, 178, 20);
 		updatePanel.add(textField);
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(114, 122, 33, 20);
-		updatePanel.add(textField_1);
-		
 		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(114, 122, 178, 22);
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"", "Sprinter", "long Distance", "Mini Marathon", "Fun runner"}));
+		comboBox.setBounds(149, 84, 178, 22);
 		updatePanel.add(comboBox);
 		
-		JButton button = new JButton("Add Runner");
-		button.setBounds(114, 122, 89, 23);
-		updatePanel.add(button);
+		JButton btnUpdate = new JButton("Update");
+		btnUpdate.setBounds(160, 181, 89, 23);
+		updatePanel.add(btnUpdate);
 		
 		JLabel lblNewLabel = new JLabel("ITB Runner Database");
 		lblNewLabel.setBounds(5, 5, 424, 19);
