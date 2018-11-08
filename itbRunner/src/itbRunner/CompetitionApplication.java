@@ -24,7 +24,7 @@ public class CompetitionApplication extends JFrame {
 	private JPanel contentPane;
 	private JTextField rNameAddTB;
 	private JTextField rAgeAddTB;
-	private JTextField textField;
+	private JTextField rNameUpdateTB;
 	private JTextField rNameRemoveTB;
 
 	/**
@@ -47,6 +47,9 @@ public class CompetitionApplication extends JFrame {
 	 * Create the frame.
 	 */
 	public CompetitionApplication() {
+		
+		runner r1 = new runner();
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -69,7 +72,9 @@ public class CompetitionApplication extends JFrame {
 		JButton btnRefresh = new JButton("Refresh");
 		btnRefresh.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				textArea.setText(t);
+				r1.showAll();
+				
+				
 			}
 		});
 		btnRefresh.setBounds(160, 181, 89, 23);
@@ -107,6 +112,14 @@ public class CompetitionApplication extends JFrame {
 		addPanel.add(rCatAddCB);
 		
 		JButton addRunnerButton = new JButton("Add Runner");
+		addRunnerButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				r1.add(rNameAddTB.getText(), Integer.parseInt(rAgeAddTB.getText()), rCatAddCB.getSelectedItem().toString());
+				rNameAddTB.setText("");
+				rAgeAddTB.setText("");
+				rCatAddCB.setSelectedIndex(0);
+			}
+		});
 		addRunnerButton.setBounds(160, 181, 89, 23);
 		addPanel.add(addRunnerButton);
 		
@@ -126,6 +139,8 @@ public class CompetitionApplication extends JFrame {
 		JButton btnRemoveRunner = new JButton("Remove");
 		btnRemoveRunner.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				r1.remove(rNameRemoveTB.getText());
+				rNameRemoveTB.setText("");
 			}
 		});
 		btnRemoveRunner.setBounds(160, 181, 89, 23);
@@ -143,19 +158,26 @@ public class CompetitionApplication extends JFrame {
 		label_2.setBounds(42, 88, 113, 14);
 		updatePanel.add(label_2);
 		
-		textField = new JTextField();
-		textField.setColumns(10);
-		textField.setBounds(149, 43, 178, 20);
-		updatePanel.add(textField);
+		rNameUpdateTB = new JTextField();
+		rNameUpdateTB.setColumns(10);
+		rNameUpdateTB.setBounds(149, 43, 178, 20);
+		updatePanel.add(rNameUpdateTB);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"", "Sprinter", "long Distance", "Mini Marathon", "Fun runner"}));
-		comboBox.setBounds(149, 84, 178, 22);
-		updatePanel.add(comboBox);
+		JComboBox rCatUpdateCB = new JComboBox();
+		rCatUpdateCB.setModel(new DefaultComboBoxModel(new String[] {"", "Sprinter", "long Distance", "Mini Marathon", "Fun runner"}));
+		rCatUpdateCB.setBounds(149, 84, 178, 22);
+		updatePanel.add(rCatUpdateCB);
 		
-		JButton btnUpdate = new JButton("Update");
-		btnUpdate.setBounds(160, 181, 89, 23);
-		updatePanel.add(btnUpdate);
+		JButton rUpdateButton = new JButton("Update");
+		rUpdateButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				r1.update(rNameUpdateTB.getText(), rCatUpdateCB.getSelectedItem().toString());
+				rNameUpdateTB.setText("");
+				rCatUpdateCB.setSelectedIndex(0);
+			}
+		});
+		rUpdateButton.setBounds(160, 181, 89, 23);
+		updatePanel.add(rUpdateButton);
 		
 		JLabel lblNewLabel = new JLabel("ITB Runner Database");
 		lblNewLabel.setBounds(5, 5, 424, 19);
